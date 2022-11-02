@@ -1,0 +1,14 @@
+@startuml docker-architecture
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+System_Boundary(network, "Docker Network") {
+	Container(splunk, "Splunk Server")
+	Container(uf, "Splunk Universal Forwarder", "node to monitor")
+	Container(app, "Application", "application to monitor")
+}
+
+Rel_U(uf, splunk, "pushes", "TCP")
+Rel_U(app, splunk, "pushes", "HTTP")
+
+@enduml

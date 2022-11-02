@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+    splunk_server:
+        image: splunk/splunk:latest
+        container_name: splunk
+        environment:
+            - SPLUNK_START_ARGS=--accept-license
+            - SPLUNK_PASSWORD=Test1234!
+        ports:
+            - "8000:8000"
+            - "9997:9997"
+    splunk_forwarder:
+        image: splunk/universalforwarder
+        container_name: uf
+        environment:
+            - SPLUNK_START_ARGS=--accept-license
+            - SPLUNK_PASSWORD=Test1234!
+        volumes:
+            - ./logs:/home/logs
