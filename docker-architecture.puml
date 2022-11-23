@@ -8,7 +8,7 @@ System_Boundary(network, "Docker Network") {
 	Container(app, "Application", "application to monitor")
 }
 
-Rel_U(uf, splunk, "pushes", "TCP")
+Rel_U(uf, splunk, "pushes", "HTTP")
 Rel_U(app, splunk, "pushes", "HTTP")
 
 @enduml

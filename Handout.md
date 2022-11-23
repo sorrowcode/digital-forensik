@@ -30,7 +30,7 @@
 
 1. Container über den Status abfragen via 
    ```bash
-   docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk status"
+docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk status"
    ```
 	Sollte folgendes erscheinen:
 	```bash
@@ -69,11 +69,15 @@ docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk help"
 Hier für gibt es von Splunk schon einiges an [Dokumentation](https://docs.splunk.com/Documentation/Forwarder/latest/Forwarder/Configuretheuniversalforwarder). Jedoch ist bei den Docker-Containern das wichtige schreibgeschützt, sodass die Veränderung der notwendigen Dateien (`inputs.conf`, `outputs.conf` und `server.conf`) innerhalb der Container nicht möglich ist. Hierbei müssen wir uns auf die vorhandenen CLI Befehle stützen.
 
 1. Finde mit `ifconfig` (Linux) oder `ipconfig` (Windows) heraus, welche IP-Adresse dein Computer hat
-2. Füge einen Server mit folgendem Befehl zu
+2. Füge einen Server mit folgendem Befehl zu (IP-Adresse ersetzen)
 	```bash
-docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk add forward-server <ip>:9997"
+docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk add forward-server 0.0.0.0:9997"
 	```
-3. Starte anschließend den Container neu mit 
+3. Füge einen Monitor hinzu
+	```bash
+docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk add monitor /path/to/app/logs/ -index main -sourcetype %app%"
+	```
+1. Starte anschließend den Container neu mit 
 	- `docker stop uf`
 	- `docker start uf`
 
