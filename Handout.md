@@ -29,40 +29,43 @@
 ### Einrichten des Splunk Universal Forwarders
 
 1. Container über den Status abfragen via 
-   ```bash
+
+```bash
 docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk status"
-   ```
-	Sollte folgendes erscheinen:
-	```bash
+```
+Sollte folgendes erscheinen:
+```bash
 Warning: Attempting to revert the SPLUNK_HOME ownership
 Warning: Executing "chown -R splunk /opt/splunkforwarder"
 execvp: No such file or directory
 Do you agree with this license? [y/n]:
-	```
-	mit `y` bestätigen und anschließend mit `y` das Preview ablehen und abwarten.
-	Ist der Prozess fertig, den Dockerbefehl von oben noch mal nutzen, um den Status abzufragen.
+```
+mit `y` bestätigen und anschließend mit `y` das Preview ablehen und abwarten.
+Ist der Prozess fertig, den Dockerbefehl von oben noch mal nutzen, um den Status abzufragen.
 2. Sollte folgende Meldung erscheinen:
-   ```bash
+
+```bash
 Warning: Attempting to revert the SPLUNK_HOME ownership
 Warning: Executing "chown -R splunk /opt/splunkforwarder"
 splunkd is not running.
-   ```
-	Kann folgender Befehl ausgeführt werden:
-	```bash
+```
+Kann folgender Befehl ausgeführt werden:
+```bash
 docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk start"
-	```
-	Anschließend sollte nach der Statusabfrage folgendes stehen:
-	```bash
+```
+Anschließend sollte nach der Statusabfrage folgendes stehen:
+```bash
 Warning: Attempting to revert the SPLUNK_HOME ownership
 Warning: Executing "chown -R splunk /opt/splunkforwarder"
 splunkd is running (PID: 1271).
 splunk helpers are running (PIDs: 1272).
-	```
+```
 3. Über den Befehl
-	```bash
+
+```bash
 docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk help"
-	```
-	Kann man sich eine Übersicht über die möglichen Befehle und Subbefehle machen.
+```
+Kann man sich eine Übersicht über die möglichen Befehle und Subbefehle machen.
 
 ### Verbinden des Splunk Universal Forwarders mit einer Splunkinstanz
 
@@ -70,14 +73,16 @@ Hier für gibt es von Splunk schon einiges an [Dokumentation](https://docs.splun
 
 1. Finde mit `ifconfig` (Linux) oder `ipconfig` (Windows) heraus, welche IP-Adresse dein Computer hat
 2. Füge einen Server mit folgendem Befehl zu (IP-Adresse ersetzen)
-	```bash
+
+```bash
 docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk add forward-server 0.0.0.0:9997"
-	```
+```
+
 3. Füge einen Monitor hinzu
-	```bash
+```bash
 docker exec -it -u splunk uf /bin/bash -c "/opt/splunkforwarder/bin/splunk add monitor /path/to/app/logs/ -index main -sourcetype %app%"
-	```
-1. Starte anschließend den Container neu mit 
+```
+4. Starte anschließend den Container neu mit 
 	- `docker stop uf`
 	- `docker start uf`
 
